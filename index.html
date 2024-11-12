@@ -49,6 +49,12 @@
             border-radius: 8px;
             margin: 0 auto 20px;
             display: block;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .image:hover {
+            transform: scale(1.02);
         }
 
         .description {
@@ -57,7 +63,53 @@
             line-height: 1.6;
             text-align: center;
             font-style: italic;
-            margin: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .facts {
+            display: none;
+            background-color: #374151;
+            padding: 16px;
+            border-radius: 6px;
+            margin-top: 20px;
+            color: #d1d5db;
+            font-size: 14px;
+            line-height: 1.6;
+            border-left: 4px solid #ef4444;
+        }
+
+        .facts.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .facts-title {
+            color: #ef4444;
+            font-size: 16px;
+            margin: 0 0 8px 0;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .toggle-facts {
+            background-color: #374151;
+            border: none;
+            color: #e5e7eb;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .toggle-facts:hover {
+            background-color: #4b5563;
         }
     </style>
 </head>
@@ -68,77 +120,88 @@
 
     <script>
         const animals = {
-    viles: {
-        title: "LOS VILES",
-        creatures: {
-            "Ardillas": {
-                text: "Observan desde las alturas, calculando cada movimiento. No solo son ladronas, son estrategas que disfrutan del caos que provocan. Sus pequeñas manos no solo roban alimento, sino que siembran confusión y desesperación entre sus víctimas con elaborados engaños.",
-                image: "./imagenes/ardillas.jpg"
+            viles: {
+                title: "LOS VILES",
+                creatures: {
+                    "Ardillas": {
+                        text: "Observan desde las alturas, calculando cada movimiento. No solo son ladronas, son estrategas que disfrutan del caos que provocan. Sus pequeñas manos no solo roban alimento, sino que siembran confusión y desesperación entre sus víctimas con elaborados engaños.",
+                        image: "./imagenes/ardillas.jpg",
+                        facts: "Estudios han demostrado que realizan falsos entierros de comida cuando se sienten observadas. Pueden recordar la ubicación de miles de nueces por años y regularmente roban hasta el 25% de las reservas de otras ardillas."
+                    },
+                    "Palomas": {
+                        text: "El veneno del cielo urbano. Su memoria es un archivo de rencores heredados por generaciones. Nunca perdonan, nunca olvidan. Sus ojos vacíos esconden una inteligencia colectiva que planea venganzas sistemáticas contra aquellos que las menosprecian.",
+                        image: "./imagenes/palomas.jpg",
+                        facts: "Investigaciones confirman que pueden reconocer rostros humanos y recordarlos por años. Se ha documentado que transfieren esta información a otras palomas y modifican su comportamiento grupal según experiencias previas."
+                    },
+                    "Gorriones": {
+                        text: "Asesinos en masa de nidos ajenos. Disfrutan destrozando los hogares de aves más débiles, condenando a sus crías a una muerte segura. Su canto alegre es una burla a la destrucción que dejan a su paso.",
+                        image: "./imagenes/gorriones.jpg",
+                        facts: "Documentado científicamente: destruyen sistemáticamente nidos de golondrinas y otras aves pequeñas, causando la muerte de polluelos y reduciendo poblaciones enteras en áreas urbanas."
+                    }
+                }
             },
-            "Palomas": {
-                text: "El veneno del cielo urbano. Su memoria es un archivo de rencores heredados por generaciones. Nunca perdonan, nunca olvidan. Sus ojos vacíos esconden una inteligencia colectiva que planea venganzas sistemáticas contra aquellos que las menosprecian.",
-                image: "./imagenes/palomas.jpg"
+            desalmados: {
+                title: "LOS DESALMADOS",
+                creatures: {
+                    "Gatos": {
+                        text: "Depredadores que han perfeccionado el arte de la tortura psicológica. Sus ojos hipnóticos ocultan una mente que calcula el momento exacto para infligir el mayor sufrimiento. La muerte rápida es un acto de misericordia que rara vez conceden.",
+                        image: "./imagenes/gatos.jpg",
+                        facts: "Estudios en Australia y EE.UU. han documentado que los gatos domésticos matan billones de aves y pequeños mamíferos anualmente, incluso cuando están bien alimentados. Juegan con sus presas por horas antes de matarlas."
+                    },
+                    "Hamsters": {
+                        text: "Caníbales que se ocultan tras una máscara de inocencia. En la oscuridad de sus madrigueras, el instinto asesino emerge. Las madres devoran a sus crías mientras estas aún respiran, un festín macabro que satisface sus más oscuros deseos.",
+                        image: "./imagenes/hamsters.jpg",
+                        facts: "El canibalismo maternal es un comportamiento documentado, especialmente bajo estrés. Las madres pueden comerse a sus crías si perciben peligro o falta de recursos."
+                    },
+                    "Conejos": {
+                        text: "Ejecutores de infanticidio calculado. Los machos eliminan sistemáticamente a las crías ajenas, convirtiendo los nidos en fosas comunes por el simple placer de la reproducción.",
+                        image: "./imagenes/conejos.jpg",
+                        facts: "El infanticidio es común entre los conejos machos. Está documentado que matan a las crías de otros machos para que las hembras vuelvan a estar receptivas para aparearse."
+                    }
+                }
             },
-            "Gorriones": {
-                text: "Asesinos en masa de nidos ajenos. Disfrutan destrozando los hogares de aves más débiles, condenando a sus crías a una muerte segura. Su canto alegre es una burla a la destrucción que dejan a su paso.",
-                image: "./imagenes/gorriones.jpg"
+            despiadados: {
+                title: "LOS DESPIADADOS",
+                creatures: {
+                    "Patos": {
+                        text: "Violentos señores del estanque que forman bandas para aterrorizar a los más débiles. Su aparente torpeza esconde una brutalidad que ni siquiera respeta a los suyos. El agua clara se tiñe con las intenciones oscuras de estas aves sin moral.",
+                        image: "./imagenes/patos.jpg",
+                        facts: "Se ha documentado que forman \"grupos de asalto\" de 3-6 machos que atacan violentamente a patos solitarios. En algunas especies, estos comportamientos son tan agresivos que causan la muerte de hembras durante la temporada de apareamiento."
+                    },
+                    "Gallinas": {
+                        text: "Tiranas que establecen su reino a través del terror y la sangre. Ejecutan a las débiles en rituales de violencia colectiva, picoteando hasta que solo quedan restos de quien alguna vez osó desafiar su jerarquía.",
+                        image: "./imagenes/gallinas.jpg",
+                        facts: "El \"orden del picoteo\" es un sistema jerárquico brutal científicamente documentado. Las gallinas dominantes pueden picotear hasta la muerte a las más débiles, y si una gallina sangra, el resto del grupo la atacará implacablemente."
+                    },
+                    "Perros": {
+                        text: "Manipuladores expertos que han evolucionado para explotar las debilidades emocionales humanas. Cada gimoteo, cada mirada, es un movimiento calculado en su juego de control mental.",
+                        image: "./imagenes/perros.jpg",
+                        facts: "Estudios de la Universidad de Portsmouth demostraron que los perros producen más expresiones faciales cuando los humanos los miran. Investigaciones adicionales confirmaron que pueden fingir lesiones o enfermedades para obtener atención o recompensas."
+                    }
+                }
+            },
+            diabolicos: {
+                title: "LOS DIABÓLICOS",
+                creatures: {
+                    "Chimpancés": {
+                        text: "Arquitectos de guerras premeditadas y torturas calculadas. Sus manos, tan similares a las nuestras, arrancan miembros y destruyen vidas en rituales de violencia organizados con una inteligencia terroríficamente humana.",
+                        image: "./imagenes/chimpances.jpg",
+                        facts: "En 1974-1978 se documentó la \"Guerra de Gombe\", donde un grupo de chimpancés sistemáticamente cazó y asesinó a todos los miembros de un grupo rival. Usan herramientas para la guerra y practican canibalismo."
+                    },
+                    "Caballos": {
+                        text: "Guardianes de venganzas ancestrales. Su memoria del rencor atraviesa años, esperando pacientemente el momento perfecto para ejecutar una venganza que ha sido largamente planeada en su mente.",
+                        image: "./imagenes/caballos.jpg",
+                        facts: "Investigaciones han demostrado que pueden recordar individuos (humanos y caballos) que los trataron bien o mal por más de 10 años. Modifican su comportamiento basándose en estas memorias y pueden mostrar agresión selectiva."
+                    },
+                    "Cerdos": {
+                        text: "Maestros del engaño cuya inteligencia sirve solo para satisfacer sus oscuros deseos. Capaces de manipular y traicionar incluso a quienes los alimentan, su astucia solo es superada por su falta de empatía.",
+                        image: "./imagenes/cerdos.jpg",
+                        facts: "Su inteligencia está al nivel de un niño de 3 años. Se ha documentado que pueden usar engaños para conseguir recursos y manipular a otros cerdos. En granjas, aprenden a activar comederos y bloquear el acceso a otros."
+                    }
+                }
             }
-        }
-    },
-    desalmados: {
-        title: "LOS DESALMADOS",
-        creatures: {
-            "Gatos": {
-                text: "Depredadores que han perfeccionado el arte de la tortura psicológica. Sus ojos hipnóticos ocultan una mente que calcula el momento exacto para infligir el mayor sufrimiento. La muerte rápida es un acto de misericordia que rara vez conceden.",
-                image: "./imagenes/gatos.jpg"
-            },
-            "Hamsters": {
-                text: "Caníbales que se ocultan tras una máscara de inocencia. En la oscuridad de sus madrigueras, el instinto asesino emerge. Las madres devoran a sus crías mientras estas aún respiran, un festín macabro que satisface sus más oscuros deseos.",
-                image: "./imagenes/hamsters.jpg"
-            },
-            "Conejos": {
-                text: "Ejecutores de infanticidio calculado. Los machos eliminan sistemáticamente a las crías ajenas, convirtiendo los nidos en fosas comunes por el simple placer de la reproducción.",
-                image: "./imagenes/conejos.jpg"
-            }
-        }
-    },
-    despiadados: {
-        title: "LOS DESPIADADOS",
-        creatures: {
-            "Patos": {
-                text: "Violentos señores del estanque que forman bandas para aterrorizar a los más débiles. Su aparente torpeza esconde una brutalidad que ni siquiera respeta a los suyos. El agua clara se tiñe con las intenciones oscuras de estas aves sin moral.",
-                image: "./imagenes/patos.jpg"
-            },
-            "Gallinas": {
-                text: "Tiranas que establecen su reino a través del terror y la sangre. Ejecutan a las débiles en rituales de violencia colectiva, picoteando hasta que solo quedan restos de quien alguna vez osó desafiar su jerarquía.",
-                image: "./imagenes/gallinas.jpg"
-            },
-            "Perros": {
-                text: "Manipuladores expertos que han evolucionado para explotar las debilidades emocionales humanas. Cada gimoteo, cada mirada, es un movimiento calculado en su juego de control mental.",
-                image: "./imagenes/perros.jpg"
-            }
-        }
-    },
-    diabolicos: {
-        title: "LOS DIABÓLICOS",
-        creatures: {
-            "Chimpancés": {
-                text: "Arquitectos de guerras premeditadas y torturas calculadas. Sus manos, tan similares a las nuestras, arrancan miembros y destruyen vidas en rituales de violencia organizados con una inteligencia terroríficamente humana.",
-                image: "./imagenes/chimpances.jpg"
-            },
-            "Caballos": {
-                text: "Guardianes de venganzas ancestrales. Su memoria del rencor atraviesa años, esperando pacientemente el momento perfecto para ejecutar una venganza que ha sido largamente planeada en su mente.",
-                image: "./imagenes/caballos.jpg"
-            },
-            "Cerdos": {
-                text: "Maestros del engaño cuya inteligencia sirve solo para satisfacer sus oscuros deseos. Capaces de manipular y traicionar incluso a quienes los alimentan, su astucia solo es superada por su falta de empatía.",
-                image: "./imagenes/cerdos.jpg"
-            }
-        }
-    }
-};
+        };
 
-        // Función para seleccionar un animal aleatorio
         function selectRandomAnimal() {
             const categories = Object.keys(animals);
             const randomCategory = categories[Math.floor(Math.random() * categories.length)];
@@ -151,7 +214,11 @@
             };
         }
 
-        // Función para mostrar el animal
+        function toggleFacts() {
+            const factsElement = document.querySelector('.facts');
+            factsElement.classList.toggle('visible');
+        }
+
         function displayAnimal() {
             const { category, animal } = selectRandomAnimal();
             const animalData = animals[category].creatures[animal];
@@ -162,10 +229,14 @@
                 <h2 class="animal-name">${animal}</h2>
                 <img src="${animalData.image}" alt="${animal}" class="image">
                 <p class="description">${animalData.text}</p>
+                <button class="toggle-facts" onclick="toggleFacts()">Ver Datos Científicos</button>
+                <div class="facts">
+                    <div class="facts-title">DATOS CIENTÍFICOS</div>
+                    ${animalData.facts}
+                </div>
             `;
         }
 
-        // Mostrar un animal aleatorio cuando se carga la página
         window.onload = displayAnimal;
     </script>
 </body>
