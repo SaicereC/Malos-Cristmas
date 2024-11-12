@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animales Malvados</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #111827;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .card {
+            background-color: #1f2937;
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid #374151;
+        }
+
+        .category {
+            color: #ef4444;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0 0 8px 0;
+        }
+
+        .animal-name {
+            font-size: 20px;
+            text-align: center;
+            margin: 0 0 20px 0;
+            color: #e5e7eb;
+        }
+
+        .image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 8px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+
+        .description {
+            color: #d1d5db;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: center;
+            font-style: italic;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="content">
+        <!-- El contenido se llenará con JavaScript -->
+    </div>
+
+    <script>
+        const animals = {
+    viles: {
+        title: "LOS VILES",
+        creatures: {
+            "Ardillas": {
+                text: "Observan desde las alturas, calculando cada movimiento. No solo son ladronas, son estrategas que disfrutan del caos que provocan. Sus pequeñas manos no solo roban alimento, sino que siembran confusión y desesperación entre sus víctimas con elaborados engaños.",
+                image: "./imagenes/ardillas.jpg"
+            },
+            "Palomas": {
+                text: "El veneno del cielo urbano. Su memoria es un archivo de rencores heredados por generaciones. Nunca perdonan, nunca olvidan. Sus ojos vacíos esconden una inteligencia colectiva que planea venganzas sistemáticas contra aquellos que las menosprecian.",
+                image: "./imagenes/palomas.jpg"
+            },
+            "Gorriones": {
+                text: "Asesinos en masa de nidos ajenos. Disfrutan destrozando los hogares de aves más débiles, condenando a sus crías a una muerte segura. Su canto alegre es una burla a la destrucción que dejan a su paso.",
+                image: "./imagenes/gorriones.jpg"
+            }
+        }
+    },
+    desalmados: {
+        title: "LOS DESALMADOS",
+        creatures: {
+            "Gatos": {
+                text: "Depredadores que han perfeccionado el arte de la tortura psicológica. Sus ojos hipnóticos ocultan una mente que calcula el momento exacto para infligir el mayor sufrimiento. La muerte rápida es un acto de misericordia que rara vez conceden.",
+                image: "./imagenes/gatos.jpg"
+            },
+            "Hamsters": {
+                text: "Caníbales que se ocultan tras una máscara de inocencia. En la oscuridad de sus madrigueras, el instinto asesino emerge. Las madres devoran a sus crías mientras estas aún respiran, un festín macabro que satisface sus más oscuros deseos.",
+                image: "./imagenes/hamsters.jpg"
+            },
+            "Conejos": {
+                text: "Ejecutores de infanticidio calculado. Los machos eliminan sistemáticamente a las crías ajenas, convirtiendo los nidos en fosas comunes por el simple placer de la reproducción.",
+                image: "./imagenes/conejos.jpg"
+            }
+        }
+    },
+    despiadados: {
+        title: "LOS DESPIADADOS",
+        creatures: {
+            "Patos": {
+                text: "Violentos señores del estanque que forman bandas para aterrorizar a los más débiles. Su aparente torpeza esconde una brutalidad que ni siquiera respeta a los suyos. El agua clara se tiñe con las intenciones oscuras de estas aves sin moral.",
+                image: "./imagenes/patos.jpg"
+            },
+            "Gallinas": {
+                text: "Tiranas que establecen su reino a través del terror y la sangre. Ejecutan a las débiles en rituales de violencia colectiva, picoteando hasta que solo quedan restos de quien alguna vez osó desafiar su jerarquía.",
+                image: "./imagenes/gallinas.jpg"
+            },
+            "Perros": {
+                text: "Manipuladores expertos que han evolucionado para explotar las debilidades emocionales humanas. Cada gimoteo, cada mirada, es un movimiento calculado en su juego de control mental.",
+                image: "./imagenes/perros.jpg"
+            }
+        }
+    },
+    diabolicos: {
+        title: "LOS DIABÓLICOS",
+        creatures: {
+            "Chimpancés": {
+                text: "Arquitectos de guerras premeditadas y torturas calculadas. Sus manos, tan similares a las nuestras, arrancan miembros y destruyen vidas en rituales de violencia organizados con una inteligencia terroríficamente humana.",
+                image: "./imagenes/chimpances.jpg"
+            },
+            "Caballos": {
+                text: "Guardianes de venganzas ancestrales. Su memoria del rencor atraviesa años, esperando pacientemente el momento perfecto para ejecutar una venganza que ha sido largamente planeada en su mente.",
+                image: "./imagenes/caballos.jpg"
+            },
+            "Cerdos": {
+                text: "Maestros del engaño cuya inteligencia sirve solo para satisfacer sus oscuros deseos. Capaces de manipular y traicionar incluso a quienes los alimentan, su astucia solo es superada por su falta de empatía.",
+                image: "./imagenes/cerdos.jpg"
+            }
+        }
+    }
+};
+
+        // Función para seleccionar un animal aleatorio
+        function selectRandomAnimal() {
+            const categories = Object.keys(animals);
+            const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+            const creatures = Object.keys(animals[randomCategory].creatures);
+            const randomAnimal = creatures[Math.floor(Math.random() * creatures.length)];
+
+            return {
+                category: randomCategory,
+                animal: randomAnimal
+            };
+        }
+
+        // Función para mostrar el animal
+        function displayAnimal() {
+            const { category, animal } = selectRandomAnimal();
+            const animalData = animals[category].creatures[animal];
+            const categoryTitle = animals[category].title;
+
+            document.getElementById('content').innerHTML = `
+                <h1 class="category">${categoryTitle}</h1>
+                <h2 class="animal-name">${animal}</h2>
+                <img src="${animalData.image}" alt="${animal}" class="image">
+                <p class="description">${animalData.text}</p>
+            `;
+        }
+
+        // Mostrar un animal aleatorio cuando se carga la página
+        window.onload = displayAnimal;
+    </script>
+</body>
+</html>
